@@ -1,0 +1,355 @@
+/*
+ * File:   newmain.c
+ * Author: Arif
+ *
+ * Created on 25 ??????? 2018 ?., 15:43
+ */
+
+
+
+#include <xc.h>
+#define _XTAL_FREQ   20000000
+
+// CONFIG
+#pragma config FOSC = HS        // Oscillator Selection bits (HS oscillator)
+#pragma config WDTE = OFF       // Watchdog Timer (WDT disabled)
+#pragma config PWRTE = ON       // Power-up Timer Enable bit (Power-up Timer is enabled)
+#pragma config CP = OFF         // Code Protection bit (Code protection disabled)
+//--------------------------------------------
+int second1 = 0;
+int second2 = 0;
+int minute1	= 0;
+int minute2	= 0;
+int place = 4;
+
+void clearb(){
+    PORTBbits.RB0=0;
+    PORTBbits.RB1=0;
+    PORTBbits.RB2=0;
+    PORTBbits.RB3=0;
+}
+void clearb2(){
+    PORTBbits.RB4=0;
+    PORTBbits.RB5=0;
+    PORTBbits.RB6=0;
+    PORTBbits.RB7=0;
+}
+void clearc(){
+    PORTCbits.RC0=0;
+    PORTCbits.RC1=0;
+    PORTCbits.RC2=0;
+    PORTCbits.RC3=0;
+}
+void clearc2(){
+    PORTCbits.RC4=0;
+    PORTCbits.RC5=0;
+    PORTCbits.RC6=0;
+    PORTCbits.RC7=0;
+}
+
+void clearAll(){
+   clearb();
+   clearb2();
+   clearc();
+   clearc2();
+   
+}
+void number1(int pb){
+clearb();
+if(pb==1){
+    PORTBbits.RB0=1;
+}
+else if(pb==2){
+    PORTBbits.RB1=1;
+}
+else if(pb==3){
+    PORTBbits.RB1=1;
+    PORTBbits.RB0=1;
+    }
+else if(pb==4){
+    PORTBbits.RB2=1;
+    }
+else if(pb==5){
+    PORTBbits.RB0=1;
+    PORTBbits.RB2=1;
+    }
+else if(pb==6){
+    PORTBbits.RB1=1;
+    PORTBbits.RB2=1;
+    }
+else if(pb==7){
+    PORTBbits.RB0=1;
+    PORTBbits.RB1=1;
+    PORTBbits.RB2=1;
+    }
+else if(pb==8){
+    PORTBbits.RB3=1;
+    }
+else if(pb==9){
+    PORTBbits.RB0=1;
+    PORTBbits.RB3=1;
+    }
+else if(pb==0){
+    PORTBbits.RB0=0;
+    PORTBbits.RB1=0;
+    PORTBbits.RB2=0;
+    PORTBbits.RB3=0;
+    }
+}
+void number2(int pb2){
+clearb2();
+if(pb2==1){
+    PORTBbits.RB4=1;
+}
+else if(pb2==2){
+    PORTBbits.RB5=1;
+}
+else if(pb2==3){
+    PORTBbits.RB5=1;
+    PORTBbits.RB4=1;
+    }
+else if(pb2==4){
+    PORTBbits.RB6=1;
+    }
+else if(pb2==5){
+    PORTBbits.RB4=1;
+    PORTBbits.RB6=1;
+    }
+else if(pb2==6){
+    PORTBbits.RB5=1;
+    PORTBbits.RB6=1;
+    }
+else if(pb2==7){
+    PORTBbits.RB4=1;
+    PORTBbits.RB5=1;
+    PORTBbits.RB6=1;
+    }
+else if(pb2==8){
+    PORTBbits.RB7=1;
+    }
+else if(pb2==9){
+    PORTBbits.RB4=1;
+    PORTBbits.RB7=1;
+    }
+else if(pb2==0){
+    PORTBbits.RB4=0;
+    PORTBbits.RB5=0;
+    PORTBbits.RB6=0;
+    PORTBbits.RB7=0;
+    }
+}
+void number3(int pc){
+clearc();
+if(pc==1){
+    PORTCbits.RC0=1;
+}
+else if(pc==2){
+    PORTCbits.RC1=1;
+}
+else if(pc==3){
+    PORTCbits.RC1=1;
+    PORTCbits.RC0=1;
+    }
+else if(pc==4){
+    PORTCbits.RC2=1;
+    }
+else if(pc==5){
+    PORTCbits.RC0=1;
+    PORTCbits.RC2=1;
+    }
+else if(pc==6){
+    PORTCbits.RC1=1;
+    PORTCbits.RC2=1;
+    }
+else if(pc==7){
+    PORTCbits.RC0=1;
+    PORTCbits.RC1=1;
+    PORTCbits.RC2=1;
+    }
+else if(pc==8){
+    PORTCbits.RC3=1;
+    }
+else if(pc==9){
+    PORTCbits.RC0=1;
+    PORTCbits.RC3=1;
+    }
+else if(pc==0){
+    PORTCbits.RC0=0;
+    PORTCbits.RC1=0;
+    PORTCbits.RC2=0;
+    PORTCbits.RC3=0;
+    }
+}
+void number4(int pc2){
+clearc2();
+if(pc2==1){
+    PORTCbits.RC4=1;
+}
+else if(pc2==2){
+    PORTCbits.RC5=1;
+}
+else if(pc2==3){
+    PORTCbits.RC5=1;
+    PORTCbits.RC4=1;
+    }
+else if(pc2==4){
+    PORTCbits.RC6=1;
+    }
+else if(pc2==5){
+    PORTCbits.RC4=1;
+    PORTCbits.RC6=1;
+    }
+else if(pc2==6){
+    PORTCbits.RC5=1;
+    PORTCbits.RC6=1;
+    }
+else if(pc2==7){
+    PORTCbits.RC4=1;
+    PORTCbits.RC5=1;
+    PORTCbits.RC6=1;
+    }
+else if(pc2==8){
+    PORTCbits.RC7=1;
+    }
+else if(pc2==9){
+    PORTCbits.RC4=1;
+    PORTCbits.RC7=1;
+    }
+else if(pc2==0){
+    PORTCbits.RC4=0;
+    PORTCbits.RC5=0;
+    PORTCbits.RC6=0;
+    PORTCbits.RC7=0;
+    }
+}
+
+void setTimes(){
+   if (second1 > 3599 || second1 < 0) {
+      second1 = 0;
+      clearAll();
+   }
+   second2 = (second1) / 10;
+   minute1 = (second1) / 60;
+   minute2 = (second1) / 600;
+   number4(second1 % 10);
+   number3(second2 % 6);
+   number2(minute1 % 10);
+   number1(minute2 % 10);
+}
+
+void plus(){
+   if(place == 4){
+      second1++;
+   } else if(place == 3){
+      second1 += 10;
+   } else if(place == 2){
+      second1 += 60;
+   } else if(place == 1){
+      second1 += 600;
+   }
+   __delay_ms(150);
+   setTimes();
+   __delay_ms(200);
+}
+
+void minus(){
+   if(place == 4){
+      second1--;
+   } else if(place == 3){
+      second1 -= 10;
+   } else if(place == 2){
+      second1 -= 60;
+   } else if(place == 1){
+      second1 -= 600;
+   }
+   __delay_ms(150);
+   setTimes();
+   __delay_ms(200);
+}
+
+void left(){
+   place--;
+   if(place < 1) place = 4;
+   __delay_ms(200);
+}
+
+void right(){
+   place++;
+   if(place > 4) place = 1;
+   __delay_ms(200);
+}
+
+unsigned char CheckButton(int button)
+{
+  unsigned char result=0;
+  unsigned int butcount=0;
+  while(!button)
+  {
+    if(butcount < 10000)
+    {
+      butcount++;
+    }
+    else
+    {
+      result = 1;
+      break;
+    }
+  }
+  return result;
+}
+
+/*
+RD0 START/STOP
+RD1 PLUS
+RD2 MINUS
+RD3 RIGHT
+RD4 LEFT
+*/
+
+void blinkLed(led){
+   if(led=1){
+   
+   PORTAbits.RA0=1;
+   
+      }
+   else if(led=0){
+      PORTAbits.RA0=0;
+      
+      }
+}
+void main(void) {
+    TRISB = 0x00;
+    PORTB = 0x00;
+    TRISA = 0x00;
+    PORTA = 0x00;
+    TRISC = 0x00;
+    PORTC = 0x00;
+   TRISD  = 0xFF;
+   PORTD=0xFF;
+   
+    while(1){
+	if(CheckButton(RD0)){
+	   
+	   setTimes();
+	   blinkLed(1);
+	   __delay_ms(950);
+	   blinkLed(0);
+	      second1++;
+	      setTimes();
+	   } else {
+	    blinkLed(1);
+	    if(CheckButton(RD4))  right();
+	    if(CheckButton(RD3))  left();
+	    if(CheckButton(RD2))  minus();
+	    if(CheckButton(RD1))  plus();
+	 }
+
+	 
+    }
+}
+                   
+       
+      
+    
+    
+
